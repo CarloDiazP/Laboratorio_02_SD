@@ -7,6 +7,15 @@ public class Cliente extends Thread {
     this.id = id;
     this.reloj = System.nanoTime();
     this.servidor = servidor;
+    servidor.addCliente(this);
+  }
+
+  public long getReloj() {
+    return reloj;
+  }
+
+  public void setReloj(long reloj) {
+    this.reloj = reloj;
   }
 
   public void run() {
@@ -16,9 +25,7 @@ public class Cliente extends Thread {
       System.out.println("Reloj de cliente " + id + ": " + this.reloj);
 
       // aplicar algoritmo berkeley para sincronizar
-      this.reloj = servidor.sincronizar(reloj);
       System.out.println("Reloj acordado de cliente " + id + ": " + this.reloj);
     }
   }
-
 }
