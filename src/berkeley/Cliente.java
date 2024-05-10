@@ -1,9 +1,9 @@
 public class Cliente extends Thread {
   private int id;
   private long reloj;
-  private Servidor servidor;
+  private ServidorCristian servidor;
 
-  public Cliente(int id, Servidor servidor) {
+  public Cliente(int id, ServidorCristian servidor) {
     this.id = id;
     this.reloj = System.nanoTime();
     this.servidor = servidor;

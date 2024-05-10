@@ -7,7 +7,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Cliente {
+public class ClienteCristian {
 
     public static void main(String[] args) throws IOException {
         String nombreHost;
@@ -15,17 +15,16 @@ public class Cliente {
         BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
 
         System.out.println("Ingrese el nombre del host: ");
-        puerto = Integer.parseInt(buffer.readLine());
-
-        System.out.println("Ingrese el puerto: ");
         nombreHost = buffer.readLine();
+        System.out.println("Ingrese el puerto: ");
+        puerto = Integer.parseInt(buffer.readLine());
 
         try {
             Socket socket = new Socket(nombreHost, puerto);
             PrintWriter escritor = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader lector = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             {
-                
+
                 System.out.println("Cliente iniciado");
                 System.out.println("Ingrese SALIR para terminar la conexión");
 
@@ -36,7 +35,6 @@ public class Cliente {
 
                 escritor.println(tiempoCero = System.currentTimeMillis());
                 tiempoServidor = Long.parseLong(lector.readLine());
-
                 tiempoInicio = System.currentTimeMillis();
                 tiempoFinal =  (tiempoServidor +  (tiempoInicio - tiempoCero))/ 2;
                 DateFormat dateFormat = new SimpleDateFormat("MM/dd HH:mm:ss");
@@ -44,7 +42,7 @@ public class Cliente {
                 System.out.println("Tiempo del cliente: " + dateFormat.format(new Date(tiempoInicio)));
                 System.out.println("Tiempo del servidor: " + dateFormat.format(new Date(tiempoServidor)));
                 System.out.println("Tiempo del cliente despues del reinicio:" + dateFormat.format(new Date(tiempoFinal)));
-                escritor.println("SALIDA");
+                escritor.println("SALIR");
                 socket.close();
 
             }
