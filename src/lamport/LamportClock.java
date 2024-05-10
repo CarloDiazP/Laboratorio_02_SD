@@ -41,7 +41,10 @@ public class LamportClock {
                     int time = clock.tick();
 
                     System.out.println(
-                            "Thread " + Thread.currentThread().getId() + " created event with Lamport time " + time);
+                            // "Thread " + Thread.currentThread().getId() + " created event with Lamport
+                            // time " + time);
+                            // En versiones java +19 se usa threadId() en lugar de getId()
+                            "Thread " + Thread.currentThread().threadId() + " created event with Lamport time " + time);
                     try {
                         // Simulamos un tiempo de espera aleatorio
                         Thread.sleep((long) (Math.random() * 1000));
@@ -50,9 +53,13 @@ public class LamportClock {
                     }
                     // Obtenemos el tiempo actualizado
                     int receivedTime = clock.tick();
-
-                    System.out.println("Thread " + Thread.currentThread().getId() + " received event with Lamport time "
-                            + receivedTime);
+                    // En versiones java +19 se usa threadId() en lugar de getId()
+                    System.out.println(
+                            "Thread " + Thread.currentThread().threadId() + " received event with Lamport time "
+                                    + receivedTime);
+                    // System.out.println("Thread " + Thread.currentThread().getId() + " received
+                    // event with Lamport time "
+                    // + receivedTime);
                     // Actualizamos el tiempo del reloj
                     clock.update(receivedTime);
                 }
