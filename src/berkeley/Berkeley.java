@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class Berkeley {
   private ArrayList<Cliente> clientes;
-  private boolean isFinished;
   private long relojServer;
   private ArrayList<Long> diffTiempo;
   private long sumDiffs;
@@ -11,12 +10,10 @@ public class Berkeley {
   Berkeley() {
     this.clientes = new ArrayList<Cliente>();
     this.diffTiempo = new ArrayList<Long>();
-    this.isFinished = false;
   }
 
   public void addCliente(Cliente cliente) {
     this.clientes.add(cliente);
-
     this.diffTiempo.add(0L);
     this.contadorClientes++;
   }
@@ -40,7 +37,6 @@ public class Berkeley {
       this.sumDiffs += reloj;
       contadorClientes--;
       if (contadorClientes == 0) {
-        this.isFinished = true;
         notify(); // si se sincronizaron los clientes el servidor continua
       }
       wait();
@@ -51,23 +47,22 @@ public class Berkeley {
   }
 
   public synchronized void calcularDiferenciasTiempos() {
-    long media = (this.sumDiffs / (this.clientes.size() + 1));
+    long media = (this.sumDiffs / (this.clientes.size() + 1));  // algoritmo Berkeley
     for (int i = 0; i < this.clientes.size(); i++)
       this.diffTiempo.set(i, (-this.diffTiempo.get(i) + media));
 
-    notifyAll();
+    notifyAll(); // se notifica a todos los clientes
   }
 
   public synchronized long obtenerPromedio() {
-    return this.sumDiffs / (this.clientes.size() + 1);
+    return this.sumDiffs / (this.clientes.size() + 1); // cálculo para establecer el tiempo de sincronizacion con el reloj del servidor
   }
 
-  public synchronized long getDiffTiempo(int n) {
+  public synchronized long getDiffTiempo(int n) { // cálculo para sincronizar el reloj del cliente con el del servidor
     return this.diffTiempo.get(n);
   }
 
-  public synchronized void reiniciar() {
-    this.isFinished = false;
+  public synchronized void reiniciar() { // reiniciar programa
     this.relojServer = 0;
     this.contadorClientes = this.clientes.size();
     this.sumDiffs = 0;
