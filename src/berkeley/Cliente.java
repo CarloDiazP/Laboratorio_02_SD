@@ -4,6 +4,7 @@ public class Cliente extends Thread {
   private Berkeley monitor;
 
   public Cliente(int id, Berkeley monitor) {
+
     this.id = id;
     this.reloj = System.nanoTime();
     this.monitor = monitor;
